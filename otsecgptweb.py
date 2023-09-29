@@ -57,11 +57,18 @@ st.write("I am an Industrial Control Systems cybersecurity expert, ask me anythi
 user_input = st.text_input("Enter your question:")
 if st.button("Ask!"):
         st.markdown("### Sources ###")
-        with st.spinner('Searching similar data'):
-            context = vectorstore.similarity_search(
-            user_input,  # our search query
-            k=3  # return 2 most relevant docs
-            )
+        for i in range(0,3):
+            while True:
+                try:
+                    with st.spinner('Searching similar data'):
+                        context = vectorstore.similarity_search(
+                        user_input,  # our search query
+                        k=3  # return 2 most relevant docs
+                        )
+                except:
+                     continue
+                break
+
         st.success('Top 3 most similar content identifed!')
         for answer in context:
             if('url' in answer.metadata):
