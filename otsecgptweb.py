@@ -57,27 +57,23 @@ st.write("I am an Industrial Control Systems cybersecurity expert, ask me anythi
 user_input = st.text_input("Enter your question:")
 if st.button("Ask!"):
         st.markdown("### Sources ###")
-        for i in range(0,3):
-            while True:
-                try:
-                    with st.spinner('Searching similar data'):
-                        context = vectorstore.similarity_search(
-                        user_input,  # our search query
-                        k=3  # return 2 most relevant docs
-                        )
-                except:
-                     continue
-                break
-
-        st.success('Top 3 most similar content identifed!')
-        for answer in context:
-            if('url' in answer.metadata):
-                expander = st.expander('📺' + answer.metadata['title'])
-            else:
-                expander = st.expander(answer.metadata['title'])
-            if('url' in answer.metadata):
-                    expander.write('📺 ' + answer.metadata['url'])
-            expander.write(answer.page_content)
+        with st.spinner('Searching similar data'):
+            try:
+                context = vectorstore.similarity_search(
+                user_input,  # our search query
+                k=3  # return 2 most relevant docs
+                )
+                st.success('Top 3 most similar content identifed!')
+                for answer in context:
+                    if('url' in answer.metadata):
+                        expander = st.expander('📺' + answer.metadata['title'])
+                    else:
+                        expander = st.expander(answer.metadata['title'])
+                    if('url' in answer.metadata):
+                            expander.write('📺 ' + answer.metadata['url'])
+                    expander.write(answer.page_content)
+            except:
+                st.warning('Retrieval failed. Please click "Ask" again')
 
 
         messages = [
