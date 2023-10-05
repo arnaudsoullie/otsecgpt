@@ -44,10 +44,7 @@ pinecone.init(
 )
 index = pinecone.Index(st.secrets["pinecone_index"])
 
-text_field = "text"
-vectorstore = Pinecone(
-    index, embed.embed_query, text_field
-)
+
 
 
 
@@ -59,6 +56,10 @@ if st.button("Ask!"):
         st.markdown("### Sources ###")
         with st.spinner('Searching similar data'):
             try:
+                text_field = "text"
+                vectorstore = Pinecone(
+                    index, embed.embed_query, text_field
+                )
                 context = vectorstore.similarity_search(
                 user_input,  # our search query
                 k=3  # return 2 most relevant docs
