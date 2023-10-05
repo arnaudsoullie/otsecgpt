@@ -68,10 +68,10 @@ if st.button("Ask!"):
                     if('url' in answer.metadata):
                         expander = st.expander('📺' + answer.metadata['title'])
                     else:
-                        expander = st.expander(answer.metadata['title'])
+                        expander = st.expander('🧑‍🔧' + answer.metadata['title'])
                     if('url' in answer.metadata):
                             expander.write('📺 ' + answer.metadata['url'])
-                    expander.write(answer.page_content)
+                    expander.write('🧑‍🔧' + answer.page_content)
             except:
                 st.warning('Retrieval failed. Please click "Ask" again')
 
