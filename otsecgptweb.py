@@ -62,21 +62,25 @@ if st.button("Ask!"):
                 )
                 context = vectorstore.similarity_search(
                 user_input,  # our search query
-                k=3  # return 2 most relevant docs
+                k=3  # return 3 most relevant docs
                 )
                 st.success('Top 3 most similar content identifed!')
                 for answer in context:
                     if('url' in answer.metadata):
                         expander = st.expander('📺' + answer.metadata['title'])
+                    elif('type' in answer.metadata and answer.metadata['type'] == 'book'):
+                        expander = st.expander('📘' + answer.metadata['title'])
                     else:
                         expander = st.expander('🧑‍🔧' + answer.metadata['title'])
                     if('url' in answer.metadata):
                             expander.write('📺 ' + answer.metadata['url'])
                     expander.write(answer.page_content)
+                    retrieval_error = False
             except:
+                retrieval_error  = True
                 st.warning('Retrieval failed. Please click "Ask" again')
 
-        if(context):
+        if not retrieval_error:
             messages = [
                 SystemMessage(
                     content="You are a helpful assistant that explains cybersecurity. All your answers must suggest the most secure way to do things. All the questions you receive are in the context of Industrial Control Systems."
@@ -97,7 +101,7 @@ if st.button("Ask!"):
                 )
             ]
 
-        if(context):
+        if not retrieval_error:
             st.markdown("### Open AI results ###")
             with st.spinner('Sending the request to OpenAI'):
                 # GPT3.5
