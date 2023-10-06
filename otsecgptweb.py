@@ -97,35 +97,36 @@ if st.button("Ask!"):
             )
         ]
 
-        st.markdown("### Open AI results ###")
-        with st.spinner('Sending the request to OpenAI'):
-            # GPT3.5
-            gpt35 = OpenAI(openai_api_key = st.secrets["openai_key"], model_name="text-davinci-003")
-            gpt35_answer = gpt35(user_input)
-            # GPT4
-            chat = ChatOpenAI(temperature=0, openai_api_key=st.secrets["openai_key"], model_name="gpt-4")
-            answer = chat(messages)
-            #GPT4 with embeddings
-            chat_with_context = ChatOpenAI(temperature=0, openai_api_key=st.secrets["openai_key"], model_name="gpt-4")
-            answer_with_context = chat(messages_with_context)
-        st.success("Answers received from OpenAI")
-        tab1, tab2, tab3 = st.tabs(["Davinci003", "GPT-4", "GPT-4 with context"])
-        box_color = "azure"
-        with tab1:
-            st.header("Davinci003")
-            st.markdown(f'<div style="background-color: {box_color}; padding: 10px;">'
-            f'<p style="color: black;">{gpt35_answer}</p>'
-            f'</div>', unsafe_allow_html=True)
-        with tab2:
-            st.header("GPT-4")
-            st.markdown(f'<div style="background-color: {box_color}; padding: 10px;">'
-            f'<p style="color: black;">{answer.content}</p>'
-            f'</div>', unsafe_allow_html=True)
-        with tab3:
-            st.header("GPT-4 with context")
-            st.markdown(f'<div style="background-color: {box_color}; padding: 10px;">'
-            f'<p style="color: black;">{answer_with_context.content}</p>'
-            f'</div>', unsafe_allow_html=True)
+        if(context):
+            st.markdown("### Open AI results ###")
+            with st.spinner('Sending the request to OpenAI'):
+                # GPT3.5
+                gpt35 = OpenAI(openai_api_key = st.secrets["openai_key"], model_name="text-davinci-003")
+                gpt35_answer = gpt35(user_input)
+                # GPT4
+                chat = ChatOpenAI(temperature=0, openai_api_key=st.secrets["openai_key"], model_name="gpt-4")
+                answer = chat(messages)
+                #GPT4 with embeddings
+                chat_with_context = ChatOpenAI(temperature=0, openai_api_key=st.secrets["openai_key"], model_name="gpt-4")
+                answer_with_context = chat(messages_with_context)
+            st.success("Answers received from OpenAI")
+            tab1, tab2, tab3 = st.tabs(["Davinci003", "GPT-4", "GPT-4 with context"])
+            box_color = "azure"
+            with tab1:
+                st.header("Davinci003")
+                st.markdown(f'<div style="background-color: {box_color}; padding: 10px;">'
+                f'<p style="color: black;">{gpt35_answer}</p>'
+                f'</div>', unsafe_allow_html=True)
+            with tab2:
+                st.header("GPT-4")
+                st.markdown(f'<div style="background-color: {box_color}; padding: 10px;">'
+                f'<p style="color: black;">{answer.content}</p>'
+                f'</div>', unsafe_allow_html=True)
+            with tab3:
+                st.header("GPT-4 with context")
+                st.markdown(f'<div style="background-color: {box_color}; padding: 10px;">'
+                f'<p style="color: black;">{answer_with_context.content}</p>'
+                f'</div>', unsafe_allow_html=True)
         
 
         
