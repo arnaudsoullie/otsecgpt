@@ -76,26 +76,26 @@ if st.button("Ask!"):
             except:
                 st.warning('Retrieval failed. Please click "Ask" again')
 
-
-        messages = [
-            SystemMessage(
-                content="You are a helpful assistant that explains cybersecurity. All your answers must suggest the most secure way to do things. All the questions you receive are in the context of Industrial Control Systems."
-            ),
-            HumanMessage(
-                content=user_input
-            )
-        ]
-        messages_with_context = [
-            SystemMessage(
-                content="You are a helpful assistant that explains cybersecurity. All your answers must suggest the most secure way to do things. All the questions you receive are in the context of Industrial Control Systems."
-            ),
-            SystemMessage(
-                content="You can answer based on the following trusted information : " + str(context)
-            ),
-            HumanMessage(
-                content=user_input
-            )
-        ]
+        if(context):
+            messages = [
+                SystemMessage(
+                    content="You are a helpful assistant that explains cybersecurity. All your answers must suggest the most secure way to do things. All the questions you receive are in the context of Industrial Control Systems."
+                ),
+                HumanMessage(
+                    content=user_input
+                )
+            ]
+            messages_with_context = [
+                SystemMessage(
+                    content="You are a helpful assistant that explains cybersecurity. All your answers must suggest the most secure way to do things. All the questions you receive are in the context of Industrial Control Systems."
+                ),
+                SystemMessage(
+                    content="You can answer based on the following trusted information : " + str(context)
+                ),
+                HumanMessage(
+                    content=user_input
+                )
+            ]
 
         if(context):
             st.markdown("### Open AI results ###")
