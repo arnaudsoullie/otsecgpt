@@ -2,4 +2,4 @@ streamlit
 pinecone-client
 tiktoken
 langchain
-openai
+openai==0.28.1
